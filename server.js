@@ -35,6 +35,11 @@ app.post("/signUp", async (req, res) => {
 
 
 
+
+app.get('/', (req, res) => {
+     res.send('Welcome to SoGit');
+});
+
 app.listen(PORT, () => {
      console.log(`${PORT}`);
    });
