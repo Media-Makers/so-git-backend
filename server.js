@@ -12,6 +12,7 @@ const PORT = process.env.PORT;
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 const signUp = require("./models/signUp");
+const signUp = require("./models");
 
 app.post("/signUp", async (req, res) => {
   const { userName, firstName, lastName, password } = req.body;
@@ -19,7 +20,21 @@ app.post("/signUp", async (req, res) => {
   res.send(newSignUp);
 });
 
+app.get("/signUp", async (req, res) => {
+  const signUp = await signUp.find({});
+  res.send(signUp);
+});
 
+app.delete("/signUp/:id", async (req, res) => {
+  await signUp.findByIdAndDelete(req.params.id);
+  res.send('Success!');
+});
+
+app.put("/signUp/:id", async (req, res) => {
+  const { userName, firstName, lastName, password } = req.body;
+  const updatedSignUp = await signUp.findByIdAndUpdate(req.params.id, { userName, firstName, lastName, password }, { new: true, overwrite: true });
+  res.send(updatedSignUp);
+});
 
 
 
