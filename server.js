@@ -11,7 +11,7 @@ const PORT = process.env.PORT;
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
-const signUp = require("./models/signUp");
+const signUp = require("./models/signup");
 
 app.post("/signUp", async (req, res) => {
   const { userName, firstName, lastName, password } = req.body;
