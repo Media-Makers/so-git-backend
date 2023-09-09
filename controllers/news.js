@@ -1,21 +1,28 @@
 const axios = require('axios');
+require('dotenv').config()
+const NEWS_API_KEY = process.env.NEWS_API_KEY;
 
-class NewsFetch {
-  constructor(apiKey) {
-    this.apiKey = apiKey;
-  }
-
-  async getTechnologyNews() {
-    const url = `https://newsapi.org/v2/everything?q=bitcoin+technology&apiKey=${this.apiKey}`;
-    
-    try {
-      const response = await axios.get(url);
-      return response.data.articles;
-    } catch (error) {
-      console.error('Error fetching technology news:', error);
-      return [];
-    }
+class News{
+  constructor(title, description, content) {
+    this.title = title;
+    this.description= description;
+    this.content = content;
   }
 }
 
-module.exports = NewsFetch;
+const getTechnologyNews = async (req, res) => {
+     
+   const url = `https://newsapi.org/v2/everything?q="javascript"&apiKey=${NEWS_API_KEY}`;
+    
+    try {
+      const response = await axios.get(url);
+      res.send(response.data.articles)
+    } catch (error) {
+     console.error('Error fetching technology news:', error);
+     res.status(500).send('Internal Server Error'); 
+
+    }
+  }
+
+
+module.exports = getTechnologyNews;
