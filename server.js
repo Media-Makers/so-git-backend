@@ -1,32 +1,25 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const axios = require("axios");
-const mongoose = require("mongoose");
-const NewsFetch = require('./news');
-
-const app = express();
-app.use(cors());
+const getTechnologyNews = require("./controllers/news");
 
 require("dotenv").config();
 const PORT = process.env.PORT;
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
-
-
 const signUp = require("./models/signup");
 
-app.get('/technology-news', async (req, res) => {
-  const url = `https://newsapi.org/v2/everything?q="javascript"&apiKey=${NEWS_API_KEY}`;
+const app = express();
 
-  try {
-    const response = await axios.get(url);
-    const articles = response.data.articles;
-    res.json(articles);
-  } catch (error) {
-    console.error('Error fetching technology news:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+app.use(cors());
+
+
+mongoose.set('strictQuery', true);
+mongoose.connect(process.env.DATABASE_URL);
+
+
+
+app.get('/technology-news', getTechnologyNews);
 
 
 app.post("/signUp", async (req, res) => {

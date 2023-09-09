@@ -8,6 +8,6 @@ const signUpSchema = new Schema({
     password: String,
 });
 
-const signUp = mongoose.model('signUp', signUpSchema);
+const signUpModel = mongoose.model('signUp', signUpSchema);
 
-module.exports = signUp; 
+module.exports = signUpModel; 
