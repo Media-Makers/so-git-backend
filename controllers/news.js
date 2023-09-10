@@ -17,6 +17,7 @@ const getTechnologyNews = async (req, res) => {
     try {
       const response = await axios.get(url);
       res.send(response.data.articles)
+      //TODO javascript search title only
     } catch (error) {
      console.error('Error fetching technology news:', error);
      res.status(500).send('Internal Server Error'); 

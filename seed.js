@@ -6,24 +6,24 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTo
 const signUpModel = require("./models/signup");
 
 
-async function seedDatabase() {
+// async function seedDatabase() {
      
-     try {
-          for (const userData of seedData) {
-            const newSignUp = new signUpModel(userData);
-            await newSignUp.save();
-          }
-          console.log("Database seeded successfully.");
-        } catch (error) {
-          console.error("Error seeding database:", error);
-        } finally {
-          mongoose.connection.close();
-        }
-      }
+//      try {
+//           for (const userData of seedData) {
+//             const newSignUp = new signUpModel(userData);
+//             await newSignUp.save();
+//           }
+//           console.log("Database seeded successfully.");
+//         } catch (error) {
+//           console.error("Error seeding database:", error);
+//         } finally {
+//           mongoose.connection.close();
+//         }
+//       }
       
-      mongoose.connection.on("error", (err) => {
-        console.error("MongoDB connection error:", err);
-      });
+//       mongoose.connection.on("error", (err) => {
+//         console.error("MongoDB connection error:", err);
+//       });
       
     
      
