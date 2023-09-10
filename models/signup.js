@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const signUpSchema = new Schema({
-    userName: String,
-    firstName: String, 
-    lastName: String, 
-    password: String,
+const newsSchema = new Schema({
+ title: String,
+ author: String,
+ description: String,
+ content: String,
+ comments: [String],
+ likes: Boolean, //? or number for how many likes
 });
 
-const signUpModel = mongoose.model('signUp', signUpSchema);
+const newsModel = mongoose.model('newsModel', newsSchema);
 
-module.exports = signUpModel; 
+module.exports = newsModel; 
