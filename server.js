@@ -69,7 +69,9 @@ res.status(202).send("Updated");
 });
 
 app.patch("/comments:/id", async (req, res) => {
-
+//TODO getonebyid
+//TODO extract comments to variables
+//TODO push new comments
 })
 
 app.get("/signUp", async (req, res) => {
