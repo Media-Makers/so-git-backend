@@ -3,7 +3,7 @@ require('dotenv').config()
 const NEWS_API_KEY = process.env.NEWS_API_KEY;
 
 class News{
-  constructor(title, description, author, content, ) {
+  constructor(title, description, author, content) {
     this.title = title;
     this.description= description;
     this.author = author;

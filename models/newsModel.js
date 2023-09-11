@@ -8,7 +8,7 @@ const newsSchema = new Schema({
  content: String,
  comments: [String],
  likes: Boolean, //? or number for how many likes
-});
+},{timestamps:true});
 
 const newsModel = mongoose.model('newsModel', newsSchema);
 

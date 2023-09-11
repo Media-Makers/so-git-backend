@@ -3,7 +3,7 @@ require("dotenv").config();
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
-const signUpModel = require("./models/signup");
+const signUpModel = require("./models/news");
 
 
 // async function seedDatabase() {
