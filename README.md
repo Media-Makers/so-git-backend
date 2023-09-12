@@ -54,4 +54,3 @@ Before you begin, ensure that you have the following software and environment va
   - Set up a MongoDB database and configure the connection in your environment variables.
 
 - **Environment Variables:** Create a `.env` file in the project root directory with the following variables:
-
