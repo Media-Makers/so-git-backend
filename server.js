@@ -96,30 +96,6 @@ app.patch("/comments/:id", async (req, res) => {
     res.status(500).send("Error adding comment");
   }
 });
-app.patch("/likes/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    //TODO getonebyid
-    const article = await newsModel.findById(id);
-    if (!article) {
-      return res.status(404).json({ message: "article not found" }); //?
-    }
-   
-   
-    const likes = req.body.likes; 
-   
-   
-    const updated = await newsModel.findByIdAndUpdate(
-      id,
-       { likes } ,
-      { new: true }
-    );
-    res.status(202).send(updated);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error adding likes");
-  }
-});
 
 app.get("/", (req, res) => {
   res.send("Welcome to SoGit");
