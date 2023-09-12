@@ -72,6 +72,20 @@ app.get("/news", async (req, res) => {
   }
 });
 
+app.patch("/likes/:id", async (req, res) => {
+  try{
+    const id = req.params.id;
+    console.log(req.params)
+    const updatedLikes = req.body.likes;
+    console.log(updatedLikes);
+await newsModel.findByIdAndUpdate(id, {likes: updatedLikes});
+res.status(202).send("Updated");
+} catch (error){
+  console.error(error);
+  res.status(500).send("Error");
+}
+});
+
 app.patch("/comments/:id", async (req, res) => {
   try {
     const id = req.params.id;
