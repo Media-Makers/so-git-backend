@@ -6,6 +6,8 @@ const newsSchema = new Schema({
  author: String,
  description: String,
  content: String,
+ url: String,
+ urlToImage: String,
  comments: [String],
  likes: Boolean, //? or number for how many likes
 },{timestamps:true});
