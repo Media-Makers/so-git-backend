@@ -21,11 +21,13 @@ mongoose.connect(process.env.DATABASE_URL);
 app.get("/technology-news", getTechnologyNews);
 
 class Article {
-  constructor(title, author, description, content) {
+  constructor(title, author, description, content, url, urlToImage) {
     this.title = title;
     this.author = author;
     this.description = description;
     this.content = content;
+    this.url = url;
+    this.urlToImage = urlToImage;
     this.likes = false;
     this.comments = [];
   }
@@ -36,9 +38,12 @@ app.get("/news", async (req, res) => {
     const articles = await newsModel.find({});
     if (articles.length > 0) {
       const currentDate = new Date();
-      const threeDaysAgo = new Date(currentDate - 3 * 24 * 60 * 60 * 1000);
-
-      if (articles.length > 0 && articles[0].createdAt < threeDaysAgo) {
+      const threeMonthsAgo = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth() - 3,
+        currentDate.getDate()
+      );
+      if (articles.length > 0 && articles[0].createdAt < threeMonthsAgo) {
         deleteScript();
       } else {
         res.status(200).send(articles);
@@ -48,19 +53,23 @@ app.get("/news", async (req, res) => {
   } catch (error) {}
   console.log("Call API");
   try {
-    const url = `https://newsapi.org/v2/everything?q="javascript"&apiKey=${KEY}`;
+    const url = `https://newsapi.org/v2/everything?q="javascript"&apiKey=${KEY}&language=en`;
     const response = await axios.get(url);
     const articles = response.data.articles;
 
     const filterArticles = articles.filter((article) =>
-      article.title.toLowerCase().includes("javascript")
+    article.title && article.description &&
+      article.title.toLowerCase().includes("javascript") ||
+      article.description.toLowerCase().includes("javascript")
     );
     for (let i = 0; i < filterArticles.length; i++) {
       const article = new Article(
         filterArticles[i].title,
         filterArticles[i].author,
         filterArticles[i].description,
-        filterArticles[i].content
+        filterArticles[i].content,
+        filterArticles[i].url,
+        filterArticles[i].urlToImage
       );
       await newsModel.create(article);
     }
@@ -73,17 +82,17 @@ app.get("/news", async (req, res) => {
 });
 
 app.patch("/likes/:id", async (req, res) => {
-  try{
+  try {
     const id = req.params.id;
-    console.log(req.params)
+    console.log(req.params);
     const updatedLikes = req.body.likes;
     console.log(updatedLikes);
-await newsModel.findByIdAndUpdate(id, {likes: updatedLikes});
-res.status(202).send("Updated");
-} catch (error){
-  console.error(error);
-  res.status(500).send("Error");
-}
+    await newsModel.findByIdAndUpdate(id, { likes: updatedLikes });
+    res.status(202).send("Updated");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error");
+  }
 });
 
 app.patch("/comments/:id", async (req, res) => {

@@ -8,12 +8,14 @@ class News{
     this.description= description;
     this.author = author;
     this.content = content;
+    this.url = url;
+    this.urlToImage = urlToImage;
   }
 }
 
 const getTechnologyNews = async (req, res) => {
      
-   const url = `https://newsapi.org/v2/everything?q="javascript"&apiKey=${NEWS_API_KEY}`;
+   const url = `https://newsapi.org/v2/everything?q="javascript"&apiKey=${NEWS_API_KEY}&language=en`;
     
     try {
       const response = await axios.get(url);
